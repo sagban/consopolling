@@ -11,14 +11,25 @@ from django.template import loader
 
 
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    try:
+        team = Teams.objects.all()
+    except Teams.DoesNotExist:
+        raise Http404("TEAMS does not exist")
+    return render(request, 'index.html', {'team': team})
+
+def team(request, team_id):
+
+
+    try:
+        team = Teams.objects.get(pk=team_id)
+    except Teams.DoesNotExist:
+        raise Http404("Question does not exist")
+    latest_question_list = Question.objects.all()
     args = {
         'latest_question_list': latest_question_list,
+
     }
-
-    return render(request, 'index.html', args)
-
-
+    return render(request, 'team.html', args)
 
 def detail(request, question_id):
     try:

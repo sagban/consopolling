@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Polls</title>
+    <title>Teams</title>
 </head>
 <body>
-{% if latest_question_list %}
+{% if team is not None %}
     <ul>
-    {% for question in latest_question_list %}
-        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+    {% for t in team %}
+        <li><a href="/teams/{{ t.team_id }}/">{{ t.team_name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No polls are available.</p>
+    <p>No Teams are available.</p>
 {% endif %}
 </body>
 </html>

@@ -19,11 +19,13 @@ from polls import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^polls/$', views.index),
-    # ex: /polls/5/
-    url(r'^polls/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
+    #main index page contains list of teams
+    url(r'^teams/$', views.index, name='index'),
+    #team/1
+    url(r'^teams/(?P<team_id>[0-9]+)/$', views.team, name='team'),
+    url(r'^teams/(?P<team_id>[0-9]+)/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     # ex: /polls/5/results/
-    url(r'^polls/(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
+    url(r'^teams/(?P<team_id>[0-9]+)/(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
     # ex: /polls/5/vote/
-    url(r'^polls/(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
+    url(r'^teams/(?P<team_id>[0-9]+)/(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
 ]
