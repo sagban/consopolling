@@ -16,7 +16,7 @@ class Teams(models.Model):
 
 
 class Question(models.Model):
-    question_id = models.AutoField(primary_key=True,default='0000000')
+    question_id = models.AutoField(primary_key=True)
     team = models.ManyToManyField(Teams)
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
@@ -26,7 +26,7 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    choice_id = models.AutoField(primary_key=True,default='0000')
+    choice_id = models.AutoField(primary_key=True)
     question = models.ManyToManyField(Question)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)

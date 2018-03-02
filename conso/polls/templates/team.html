@@ -5,14 +5,28 @@
     <title>Team</title>
 </head>
 <body>
-{% if question %}
+<form action="/teams/{{team.team_id}}/vote/" method="post">
     <ul>
-    {% for question in latest_question_list %}
-        <li><a href="/polls/{{ team }}/{{ question.id }}/">{{ question.question_text }}</a></li>
-    {% endfor %}
+        {% if questions is not None %}
+
+            {% for question in questions %}
+                <li>
+                    <h1>{{ question.question_text }}</h1>
+
+                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+                    {% csrf_token %}
+                    {% for choice in question.choice_set.all %}
+                        <input type="radio" name="{{question.question_id}}" id="choice{{ forloop.counter }}" value="{{ choice.choice_id }}" />
+                        <label for="{{question.question_id}}{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>No questions are available.</p>
+        {% endif %}
     </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+    <input type="submit" value="Vote" />
+</form>
 </body>
 </html>
