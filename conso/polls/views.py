@@ -4,9 +4,11 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse, Http404
+from django.http import HttpResponseRedirect,HttpResponse, Http404
 from .models import *
 from django.template import loader
+from django.urls import reverse
+
 #from django.core.context_processors import csrf
 
 
@@ -38,25 +40,37 @@ def detail(request, question_id):
         raise Http404("Question does not exist")
     return render(request, 'details.html', {'question': question})
 
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+def results(request, team_id):
+    response = "You're looking at the results of team %s. You provided"
+    return HttpResponse(response % team_id)
 
 def vote(request, team_id):
+
     questions = Question.objects.filter(team=team_id)
-    for question in questions:
-        try:
-            selected_choice = question.choice_set.get(pk=request.POST['choice'])
-        except (KeyError, Choice.DoesNotExist):
-            # Redisplay the question voting form.
-            return render(request, 'team.html', {
-                'question': question,
-                'error_message': "You didn't select a choice.",
-            })
-        else:
-            selected_choice.votes += 1
-            selected_choice.save()
-            # Always return an HttpResponseRedirect after successfully dealing
-            # with POST data. This prevents data from being posted twice if a
-            # user hits the Back button.
-    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    team = Teams.objects.get(pk=team_id)
+    if request.method == 'POST':
+
+        for question in questions:
+            try:
+                selected_choice = question.choice_set.get(pk=request.POST["2"])
+
+            except (KeyError, Choice.DoesNotExist):
+                # Redisplay the question voting form.
+                return render(request, 'team.html', {
+                    'questions': questions,
+                    'team': team,
+                    'error_message': "You didn't select a choice.",
+                })
+            else:
+                selected_choice.votes += 1
+                selected_choice.save()
+                # Always return an HttpResponseRedirect after successfully dealing
+                # with POST data. This prevents data from being posted twice if a
+                # user hits the Back button.
+        return HttpResponseRedirect(reverse('results', args=(team_id)))
+    else:
+        args = {
+            'questions': questions,
+            'team': team,
+        }
+        return render(request, 'team.html', args)
