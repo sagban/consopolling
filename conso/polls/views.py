@@ -40,9 +40,6 @@ def detail(request, question_id):
         raise Http404("Question does not exist")
     return render(request, 'details.html', {'question': question})
 
-def results(request, team_id):
-    response = "You're looking at the results of team %s. You provided"
-    return HttpResponse(response % team_id)
 
 def vote(request, team_id):
 
@@ -50,10 +47,11 @@ def vote(request, team_id):
     team = Teams.objects.get(pk=team_id)
     if request.method == 'POST':
 
+        '''Validating Form server side'''
         for question in questions:
             que = question.question_id
             try:
-                selected_choice = question.choice_set.get(choice_id = request.POST[str(que)])
+                selected_choice = question.choice_set.get(choice_id=request.POST[str(que)])
 
             except (KeyError, Choice.DoesNotExist):
                 # Redisplay the question voting form.
@@ -62,16 +60,41 @@ def vote(request, team_id):
                     'team': team,
                     'error_message': "Plz, Vote all the given queries",
                 })
-            else:
-                selected_choice.votes += 1
-                selected_choice.save()
-                # Always return an HttpResponseRedirect after successfully dealing
-                # with POST data. This prevents data from being posted twice if a
-                # user hits the Back button.
-        return HttpResponseRedirect(reverse('results', args=(team_id)))
+
+
+        for question in questions:
+            que = question.question_id
+            selected_choice = question.choice_set.get(choice_id = request.POST[str(que)])
+            '''Increase the counter Of the Vote'''
+            selected_choice.votes += 1
+
+
+            '''Saving the Choice'''
+            selected_choice.save()
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
+        return HttpResponseRedirect(reverse('review', args=(team_id)))
+    #redirecting to the team page
     else:
         args = {
             'questions': questions,
             'team': team,
+            'error_message': "There is Some Problem, Plz Vote Again",
         }
         return render(request, 'team.html', args)
+
+
+def review(request, team_id):
+    team = Teams.objects.get(pk=team_id)
+    args ={
+        "response" : "Thank you for voting team.",
+        "team" : team,
+    }
+
+    return render(request, 'review.html', args)
+
+
+def results(request):
+    args={}
+    return render(request, 'results.html', args)
