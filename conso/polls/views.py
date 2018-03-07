@@ -51,15 +51,16 @@ def vote(request, team_id):
     if request.method == 'POST':
 
         for question in questions:
+            que = question.question_id
             try:
-                selected_choice = question.choice_set.get(pk=request.POST["2"])
+                selected_choice = question.choice_set.get(choice_id = request.POST[str(que)])
 
             except (KeyError, Choice.DoesNotExist):
                 # Redisplay the question voting form.
                 return render(request, 'team.html', {
                     'questions': questions,
                     'team': team,
-                    'error_message': "You didn't select a choice.",
+                    'error_message': "Plz, Vote all the given queries",
                 })
             else:
                 selected_choice.votes += 1
