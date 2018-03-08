@@ -47,6 +47,16 @@ def vote(request, team_id):
     team = Teams.objects.get(pk=team_id)
     if request.method == 'POST':
 
+        if request.session.get("Already, Voted", False):
+            # Redisplay the question voting form.
+            return render(request, 'team.html', {
+                'questions': questions,
+                'team': team,
+                'error_message': "You've already voted!",
+            })
+
+
+
         '''Validating Form server side'''
         for question in questions:
             que = question.question_id
@@ -71,6 +81,7 @@ def vote(request, team_id):
 
             '''Saving the Choice'''
             selected_choice.save()
+            request.session["Already, Voted"] = True
             # Always return an HttpResponseRedirect after successfully dealing
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
