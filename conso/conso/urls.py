@@ -18,6 +18,8 @@ from django.contrib import admin
 from polls import views
 
 urlpatterns = [
+    url(r'^$', views.login_user, name='login_user'),
+    url(r'^login_validate/$', views.login_validate, name='login_validate'),
     url(r'^admin/', admin.site.urls),
     #main index page contains list of teams
     url(r'^teams/$', views.index, name='index'),
