@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "header.html" %}
+<body>
+{% include "navbar.html" %}
+<div class="container">
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <form id="login-form" action="/login_validate/" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s12 m6 offset-m3">
+                <i class="material-icons prefix">phone</i>
+              <input id="mobile" type="text" class="validate" name="mobile">
+              <label for="disable">Mobile</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m6 offset-m3">
+                <i class="material-icons prefix">check</i>
+              <input id="password" type="password" class="validate" name="password">
+              <label for="password">Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m6 offset-m3">
+                  <button class="btn waves-effect waves-red red " type="submit" name="action">Proceed
+                    <i class="material-icons right">send</i>
+                  </button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+{% include "footer.html"%}
+</body>
+</html>

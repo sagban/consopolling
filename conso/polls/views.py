@@ -109,3 +109,35 @@ def review(request, team_id):
 def results(request):
     args={}
     return render(request, 'results.html', args)
+
+
+
+def login_user(request):
+    if request.session.get("conso", False):
+        try:
+            team = Teams.objects.all()
+        except Teams.DoesNotExist:
+            raise Http404("TEAMS does not exist")
+        args = {'team': team,
+                'error_message' : "Youre already Logged in!",
+                }
+        return render(request, 'index.html', args)
+
+    args = {}
+    return render(request, 'login_user.html', args)
+
+
+def login_validate(request):
+
+    if request.method == "POST":
+
+        if request.POST["password"] == 'conso':
+            try:
+                team = Teams.objects.all()
+            except Teams.DoesNotExist:
+                raise Http404("TEAMS does not exist")
+            request.session[request.POST["password"]] = True
+            return render(request, 'index.html', {'team': team})
+
+    args = {"error_message" : "Incorrect PassWord"}
+    return render(request, 'login_user.html', args)
