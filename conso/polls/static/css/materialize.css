@@ -4270,7 +4270,7 @@ nav .brand-logo {
   color: #fff;
   display: inline-block;
   font-size: 2.1rem;
-  padding: 0;
+  padding: 0.5em;
 }
 
 nav .brand-logo.center {
@@ -4286,7 +4286,7 @@ nav .brand-logo.center {
             transform: translateX(-50%);
   }
   nav .brand-logo.left, nav .brand-logo.right {
-    padding: 0;
+    padding: 0.5em;
     -webkit-transform: none;
             transform: none;
   }

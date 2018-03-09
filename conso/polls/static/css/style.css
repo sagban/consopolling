@@ -8,3 +8,34 @@ p{
   // opacity: 1 !important;
   left: 18px !important;
 }
+
+.brand-logo {
+    margin: 0px !important;
+}
+
+#login_form {
+    background-color: #eaeaea;
+    padding-top: 1em;
+    padding-bottom: 1em;
+/*    padding-left: 0 !important;
+    padding-right: 0 !important;*/
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+@media (max-width: 500px) {
+    #login_form {
+        width: 90%;
+    }
+}
+
+
+@media (min-width: 500px) {
+    #login_form {
+        width: 400px;
+    }
+}
+
+#login_form h5 {
+    text-align: center;
+}

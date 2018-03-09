@@ -3,20 +3,21 @@
 {% include "header.html" %}
 <body>
 {% include "navbar.html" %}
-<div class="container">
+<div class="container" id="login_form">
+    <h5>Login</h5>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <form id="login-form" action="/login_validate/" method="post">
         {% csrf_token %}
         <div class="row">
-            <div class="input-field col s12 m6 offset-m3">
-                <i class="material-icons prefix">phone</i>
+            <div class="input-field col s12 m10 offset-m1">
+                <i class="material-icons prefix">person</i>
               <input id="mobile" type="text" class="validate" name="mobile">
               <label for="disable">Mobile</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s12 m6 offset-m3">
-                <i class="material-icons prefix">check</i>
+            <div class="input-field col s12 m10 offset-m1">
+                <i class="material-icons prefix">lock</i>
               <input id="password" type="password" class="validate" name="password">
               <label for="password">Password</label>
             </div>
