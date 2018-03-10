@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect,HttpResponse, Http404
 from .models import *
 from django.template import loader
 from django.urls import reverse
+import re
 
 #from django.core.context_processors import csrf
 
@@ -47,12 +48,12 @@ def vote(request, team_id):
     team = Teams.objects.get(pk=team_id)
     if request.method == 'POST':
 
-        if request.session.get("Already, Voted", False):
+        if request.session.get(team_id, False):
             # Redisplay the question voting form.
             return render(request, 'team.html', {
                 'questions': questions,
                 'team': team,
-                'error_message': "You've already voted!",
+                'error_message': "You've already voted! for team : " + team.team_name,
             })
 
 
@@ -81,7 +82,7 @@ def vote(request, team_id):
 
             '''Saving the Choice'''
             selected_choice.save()
-            request.session["Already, Voted"] = True
+        request.session[team_id] = True
             # Always return an HttpResponseRedirect after successfully dealing
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
@@ -130,6 +131,12 @@ def login_user(request):
 def login_validate(request):
 
     if request.method == "POST":
+
+        if not re.match(r'^[6-9]\d{9}$',request.POST["mobile"]):
+            args = {"error_message": "Plz, enter valid 10-digit mobile number"}
+            return render(request, 'login_user.html', args)
+
+
 
         if request.POST["password"] == 'conso':
             try:
