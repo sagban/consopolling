@@ -1,0 +1,1 @@
+web: gunicorn /conso/conso/wsgi.py
