@@ -146,5 +146,9 @@ def login_validate(request):
             request.session[request.POST["password"]] = True
             return render(request, 'index.html', {'team': team})
 
-    args = {"error_message" : "Incorrect PassWord"}
+        else:
+            args = {"error_message": "Plz, enter the provided passkey"}
+            return render(request, 'login_user.html', args)
+
+    args = {"error_message" : "Plz, login correctly"}
     return render(request, 'login_user.html', args)
