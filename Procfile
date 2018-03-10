@@ -1,1 +1,1 @@
-web: gunicorn conso/conso/wsgi.py
+web: gunicorn /conso/conso/wsgi.py
