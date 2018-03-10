@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect,HttpResponse, Http404
 from .models import *
 from django.template import loader
 from django.urls import reverse
+import re
 
 #from django.core.context_processors import csrf
 
@@ -130,6 +131,12 @@ def login_user(request):
 def login_validate(request):
 
     if request.method == "POST":
+
+        if not re.match(r'^[6-9]\d{9}$',request.POST["mobile"]):
+            args = {"error_message": "Plz, enter valid 10-digit mobile number"}
+            return render(request, 'login_user.html', args)
+
+
 
         if request.POST["password"] == 'conso':
             try:
