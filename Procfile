@@ -1,1 +1,1 @@
-web: gunicorn consopolling.wsgi
+web: gunicorn conso/conso/wsgi.py
