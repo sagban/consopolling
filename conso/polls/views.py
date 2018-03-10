@@ -119,7 +119,7 @@ def login_user(request):
         except Teams.DoesNotExist:
             raise Http404("TEAMS does not exist")
         args = {'team': team,
-                'error_message' : "Youre already Logged in!",
+                'error_message' : "You're already Logged in!",
                 }
         return render(request, 'index.html', args)
 

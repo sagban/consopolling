@@ -5,8 +5,8 @@
 {% include "navbar.html" %}
 <div class="container" id="login_form">
     <h5>Login</h5>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    <form id="login-form" action="/login_validate/" method="post">
+    {% if error_message %}<p align="center"><strong>{{ error_message }}</strong></p>{% endif %}
+    <form name="login_form" id="login-form" action="/login_validate/" method="post" onkeydown="return validateForm()">
         {% csrf_token %}
         <div class="row">
             <div class="input-field col s12 m10 offset-m1">
@@ -22,10 +22,11 @@
               <label for="password">Password</label>
             </div>
         </div>
+
         <div class="row">
-            <div class="input-field col s12 m6 offset-m3">
-                  <button class="btn waves-effect waves-red red " type="submit" name="action">Proceed
-                    <i class="material-icons right">send</i>
+            <div class="input-field col s8 m6 offset-m3 offset-s2">
+                  <button class="btn waves-effect waves-red red " type="submit" name="action" id="'proceed">Proceed
+                    <i class="material-icons right">forward</i>
                   </button>
             </div>
         </div>
