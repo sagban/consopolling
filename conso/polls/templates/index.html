@@ -3,7 +3,7 @@
 {% include "header.html" %}
 <body>
 {% include "navbar.html" %}
-<div class="container">
+<!--<div class="container">
     {% if team is not None %}
     <ul>
     {% for t in team %}
@@ -13,7 +13,30 @@
     {% else %}
         <p>No Teams are available.</p>
     {% endif %}
-</div>
+</div>-->
+    {% if team is not None %}
+      <div class="row">
+          {% for t in team %}
+        <div class="col s12 m3">
+          <div class="card">
+            <div class="card-image">
+              <img src="../static/images/team.jpg">
+              <span class="card-title">{{ t.team_name }}</span>
+            </div>
+            <!--<div class="card-content">
+              <p></p>
+            </div>-->
+            <div class="card-action">
+              <a href="/teams/{{ t.team_id }}/">Vote for {{ t.team_name }} here!</a>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+      </div>
+    {% else %}
+        <p>No Teams are available.</p>
+    {% endif %}
+
 
 
 

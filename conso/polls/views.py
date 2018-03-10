@@ -130,6 +130,16 @@ def login_user(request):
 
 def login_validate(request):
 
+    if request.session.get("conso", False):
+        try:
+            team = Teams.objects.all()
+        except Teams.DoesNotExist:
+            raise Http404("TEAMS does not exist")
+        args = {'team': team,
+                'error_message' : "You're already Logged in!",
+                }
+        return render(request, 'index.html', args)
+
     if request.method == "POST":
 
         if not re.match(r'^[6-9]\d{9}$',request.POST["mobile"]):
@@ -146,5 +156,9 @@ def login_validate(request):
             request.session[request.POST["password"]] = True
             return render(request, 'index.html', {'team': team})
 
-    args = {"error_message" : "Incorrect PassWord"}
+        else:
+            args = {"error_message": "Plz, enter the provided passkey"}
+            return render(request, 'login_user.html', args)
+
+    args = {"error_message" : "Plz, login correctly"}
     return render(request, 'login_user.html', args)
