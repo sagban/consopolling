@@ -2,4 +2,7 @@
 venv/
 .idea/
 *.pyc
+conso/db.sqlite3
+conso/conso/wsgi.pyc
+conso/conso/settings.pyc
 

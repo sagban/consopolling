@@ -27,7 +27,7 @@ SECRET_KEY = '22%ah_w3$(lnk#!tl-1x40tl_d)bejezaox!qdqpwkjt7ci=j4'
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['conso-poll.herokuapp.com', '0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -127,4 +127,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
-
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
