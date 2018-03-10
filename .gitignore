@@ -2,4 +2,4 @@
 venv/
 .idea/
 *.pyc
-
+conso/db.sqlite3
