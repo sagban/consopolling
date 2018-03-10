@@ -130,6 +130,16 @@ def login_user(request):
 
 def login_validate(request):
 
+    if request.session.get("conso", False):
+        try:
+            team = Teams.objects.all()
+        except Teams.DoesNotExist:
+            raise Http404("TEAMS does not exist")
+        args = {'team': team,
+                'error_message' : "You're already Logged in!",
+                }
+        return render(request, 'index.html', args)
+
     if request.method == "POST":
 
         if not re.match(r'^[6-9]\d{9}$',request.POST["mobile"]):
